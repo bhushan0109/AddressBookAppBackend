@@ -1,8 +1,13 @@
 package com.finovate.dto;
 
-public class AddressBookDTO {
+import javax.validation.constraints.Pattern;
 
+public class AddressBookDTO {
+	
+	@Pattern(regexp = "^[A-Z][a-z]{2,}$", message = "Invalid firstName")
 	public String firstName;
+	
+	@Pattern(regexp = "^[A-Z][a-z]{2,}$", message = "Invalid lastName")
 	public String lastName;
 
 	public AddressBookDTO(String firstName, String lastName) {

@@ -2,6 +2,8 @@ package com.finovate.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +45,7 @@ public class AddressBookController {
 
 	//curl -X POST -H "Content-Type: application/json" -d '{"firstName": "Lisa","lastName":"patil"}' "http://localhost:8080/addressbook/create" -w "\n"
 	@PostMapping("/create")
-	public ResponseEntity<ResponseDTO> createAddressBookData(@RequestBody AddressBookDTO addressBookDTO) {
+	public ResponseEntity<ResponseDTO> createAddressBookData(@Valid @RequestBody AddressBookDTO addressBookDTO) {
 		AddressBookData addressBookData = addressBookService.createAddressBookData(addressBookDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Successfully created the data ", addressBookData);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
@@ -51,7 +53,7 @@ public class AddressBookController {
 	
      //curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "BHUSHAN","lastName":"RAHI"}' "http://localhost:8080/addressbook/update" -w "\n"
 	@PutMapping("/update/{contId}")
-	public ResponseEntity<ResponseDTO> updateAddressBookData(@PathVariable("contId") int contId,
+	public ResponseEntity<ResponseDTO> updateAddressBookData(@Valid @PathVariable("contId") int contId,
 			@RequestBody AddressBookDTO addressBookDTO) {
 		AddressBookData addressBookData = addressBookService.updateAddressBookData(contId, addressBookDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Updated address book of Id : ", addressBookData);
