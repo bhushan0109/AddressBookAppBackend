@@ -1,6 +1,8 @@
 package com.finovat.model;
 import com.finovate.dto.AddressBookDTO;
 
+import lombok.Data;
+@Data
 public class AddressBookData {
 
 	private int addressBookId;
@@ -14,30 +16,6 @@ public class AddressBookData {
 		this.addressBookId = addressBookId;
 		this.firstName = addressBookDTO.firstName;
 		this.lastName = addressBookDTO.lastName;
-	}
-
-	public int getAddressBookId() {
-		return addressBookId;
-	}
-
-	public void setAddressBookId(int addressBookId) {
-		this.addressBookId = addressBookId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	@Override
