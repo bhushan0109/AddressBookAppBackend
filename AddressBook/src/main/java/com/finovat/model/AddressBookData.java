@@ -40,5 +40,11 @@ public class AddressBookData {
 		this.lastName = lastName;
 	}
 
+	@Override
+	public String toString() {
+		return "AddressBookData [addressBookId=" + addressBookId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ "]";
+	}
+
 	
 }
