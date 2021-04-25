@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.finovat.model.AddressBookData;
 import com.finovate.dto.AddressBookDTO;
+import com.finovate.exception.AddressBookException;
 
 @Service
 public class AddressBookService implements IAddressBookService {
@@ -20,7 +21,8 @@ public class AddressBookService implements IAddressBookService {
 
 	@Override
 	public AddressBookData getAddressBookById(int contId) {
-		return addressBookList.get(contId - 1);
+		return addressBookList.stream().filter(bookData -> bookData.getAddressBookId() == contId).findFirst()
+				.orElseThrow(() -> new AddressBookException("Addressbook entry Not found"));
 	}
 
 	@Override
