@@ -11,35 +11,54 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finovat.model.AddressBookData;
 import com.finovate.dto.AddressBookDTO;
-
+import com.finovate.dto.ResponseDTO;
 @RestController
 @RequestMapping("/addressbook")
 public class AddressBookController {
-
+	
+	//curl localhost:8080/addressbook/get -w "\n"
 	@GetMapping(value = { "", "/", "/get" })
-	public ResponseEntity<String> getAddressBookData() {
-		return new ResponseEntity<String>("Get Call Success", HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookData() {
+		AddressBookData contactData = null;
+		contactData = new AddressBookData(1, new AddressBookDTO("bhushan", "patil"));
+		ResponseDTO respDTO = new ResponseDTO("Get Call Successful", contactData);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
-
+	//curl localhost:8080/addressbook/get/1 -w "\n"
 	@GetMapping("/get/{bookId}")
-	public ResponseEntity<String> getAddressBookDataById(@PathVariable("bookId") int bookId) {
-		return new ResponseEntity<String>("Get Call Success for id: " + bookId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAddressBookDataById(@PathVariable("bookId") int bookId) {
+		AddressBookData contactData = null;
+		contactData = new AddressBookData(1, new AddressBookDTO("bhushan", "patil"));
+		ResponseDTO respDTO = new ResponseDTO("Get Call For ID Successful", contactData);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+
+	}
+	
+	//curl -X POST -H "Content-Type: application/json" -d '{"firstName": "Lisa","lastName":"patil"}' "http://localhost:8080/addressbook/create" -w "\n"
+	@PostMapping("/create")
+	public ResponseEntity<ResponseDTO> addAddressBookData(@RequestBody AddressBookDTO addressBookDTO) {
+		AddressBookData contactData = null;
+		contactData = new AddressBookData(1, addressBookDTO);
+		ResponseDTO respDTO = new ResponseDTO("Created Address Book Contact Successfully", contactData);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 
-	@PostMapping("/create")
-	public ResponseEntity<String> addAddressBookData(@RequestBody AddressBookDTO addressBookDTO) {
-		return new ResponseEntity<String>("Created address Book Data for: " + addressBookDTO, HttpStatus.OK);
-	}
+	//curl -X PUT -H "Content-Type: application/json" -d '{"firstName": "BHUSHAN","lastName":"RAHI"}' "http://localhost:8080/addressbook/update" -w "\n"
 
 	@PutMapping("/update")
-	public ResponseEntity<String> updateAddressBookData(@RequestBody AddressBookDTO addressBookDTO) {
-		return new ResponseEntity<String>("Updated address Book Data for: " + addressBookDTO, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> updateAddressBookData(@RequestBody AddressBookDTO addressBookDTO) {
+		AddressBookData contactData = null;
+		contactData = new AddressBookData(1, addressBookDTO);
+		ResponseDTO respDTO = new ResponseDTO("Updated Address Book Contact Successfully", contactData);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
-
+	
+	//curl -X DELETE -H "Content-Type: application/json" localhost:8080/addressbook/delete/1 -w "\n"
 	@DeleteMapping("/delete/{bookId}")
-	public ResponseEntity<String> deleteAddressBookData(@PathVariable("bookId") int bookId) {
-		return new ResponseEntity<String>("Delete Call Success for id: " + bookId, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> deleteAddressBookData(@PathVariable("bookId") int bookId) {
+		ResponseDTO respDTO = new ResponseDTO("Deleted Address Book Contact Successfully", "Deleted Id: " + bookId);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
-
 }
